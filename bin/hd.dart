@@ -142,7 +142,7 @@ void writeAppPages(String pageName, {String directoryName = ''}) {
     importBinding =
         "import '../modules/$directoryName/$pageName/${pageName}_binding.dart';";
     importView =
-        "import '../modules/$directoryName/$pageName/${pageName}_view.dart;";
+        "import '../modules/$directoryName/$pageName/${pageName}_view.dart';";
   }
 
   String newPage = '''
