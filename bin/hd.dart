@@ -11,6 +11,10 @@ void main(List<String> arguments) {
   if (command == 'create') {
     if (arguments.length >= 2) {
       final parts = arguments[1].split(':');
+      if (parts.length == 1) {
+        print('命令输入有误');
+        return;
+      }
 
       final type = parts[0];
       final pageName = parts[1];

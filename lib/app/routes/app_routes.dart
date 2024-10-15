@@ -5,6 +5,7 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   Routes._();
+  static const TEST_PAGE_1 = '/test_page_1';
   static const TEST_PAGE_TAB3 = '/test_page_tab3';
 
   static const MARKET = _Paths.MARKET;
@@ -13,6 +14,7 @@ abstract class Routes {
   static const MINE = _Paths.MINE;
   static const NOTICE = _Paths.NOTICE;
   static const OPTIONAL = _Paths.OPTIONAL;
+
   static const HOME = _Paths.HOME;
   static const SPLASH = _Paths.SPLASH;
   static const LOGIN = _Paths.LOGIN;

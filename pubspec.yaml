@@ -1,7 +1,7 @@
 name: hd
-description: A sample command-line application.
+description: custom get CLI,(for flutter project with getx)
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/helloDolin
 
 environment:
   sdk: ^3.1.0
@@ -11,7 +11,7 @@ dependencies:
   path: ^1.8.0
 
 executables:
-  hd: hd.dart
+  hd: hd # 表示将 bin/hd.dart 的内容作为 hd 命令行工具的入口
 
 dev_dependencies:
   lints: ^2.0.0
