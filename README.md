@@ -10,6 +10,9 @@ get cli app_routes 是配合 PATH 使用的，对我们项目来说无用
 
 ## 安装
 dart pub global activate hd
+环境变量中添加：
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+
 
 ## 使用
 ### 普通项目
