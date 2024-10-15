@@ -133,7 +133,7 @@ class ${formatPageName(pageName)}Controller extends KKBaseController {
 }
 ''');
 
-  kkwriteAppRoutes(pageName, directoryName: directoryName);
+  kkwriteAppPages(pageName, directoryName: directoryName);
   kkwriteAppRoutes(pageName, directoryName: directoryName);
 
   print('$pageName 创建成功');
@@ -147,10 +147,10 @@ void kkwriteAppRoutes(String pageName, {String directoryName = ''}) {
   File file = File(filePath);
   String content = file.readAsStringSync();
 
-  if (content.contains('Routes._();')) {
+  if (content.contains('KKRoutes._();')) {
     content = content.replaceFirst(
-      'Routes._();',
-      'Routes._();\n$route',
+      'KKRoutes._();',
+      'KKRoutes._();\n$route',
     );
   }
 

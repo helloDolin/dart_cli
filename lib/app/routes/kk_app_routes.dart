@@ -3,10 +3,8 @@
 part of 'app_pages.dart';
 // DO NOT EDIT. This is code generated via package:get_cli/get_cli.dart
 
-abstract class Routes {
-  Routes._();
-  static const TEST_PAGE_1 = '/test_page_1';
-  static const TEST_PAGE_TAB3 = '/test_page_tab3';
+abstract class KKRoutes {
+  KKRoutes._();
 
   static const MARKET = _Paths.MARKET;
   static const MARKET_SEARCH = _Paths.MARKET_SEARCH;

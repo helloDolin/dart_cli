@@ -12,7 +12,7 @@
             "type": "dart",
             "args": [
                 "kkcreate",
-                "page:test_page_1",
+                "page:commom_task",
                 "on",
                 "home"
             ]
