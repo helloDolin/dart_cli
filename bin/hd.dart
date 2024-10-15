@@ -125,7 +125,6 @@ class ${formatPageName(pageName)}View extends KKBaseView<${formatPageName(pageNa
 
   // controller
   controllerFile.writeAsStringSync('''
-import 'package:get/get.dart';
 import 'package:kkart/app/base/kk_base_controller.dart';
 
 class ${formatPageName(pageName)}Controller extends KKBaseController {
@@ -290,7 +289,6 @@ class ${formatPageName(pageName)}View extends BaseView<${formatPageName(pageName
 
   // controller
   controllerFile.writeAsStringSync('''
-import 'package:get/get.dart';
 import 'package:myth/app/base/base_controller.dart';
 
 class ${formatPageName(pageName)}Controller extends BaseController {
