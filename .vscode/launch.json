@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    // flutter create page:test_page on home
+    "configurations": [
+        {
+            "name": "hd",
+            "request": "launch",
+            "program": "bin/hd.dart",
+            "type": "dart",
+            "args": [
+                "create",
+                "page:test_page_2",
+                "on",
+                "home/tab1"
+            ]
+        }
+    ]
+}
