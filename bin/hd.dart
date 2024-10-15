@@ -52,6 +52,7 @@ void createPage(String pageName, {String directoryName = ''}) {
         'lib/app/modules/$directoryName/$pageName/${pageName}_binding.dart');
   }
 
+  // binding
   bindingFile.writeAsStringSync('''
 import 'package:get/get.dart';
 
@@ -67,6 +68,7 @@ class ${formatPageName(pageName)}Binding extends Bindings {
 }
 ''');
 
+  // view
   viewFile.writeAsStringSync('''
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -92,6 +94,7 @@ class ${formatPageName(pageName)}View extends BaseView<${formatPageName(pageName
 }
 ''');
 
+  // controller
   controllerFile.writeAsStringSync('''
 import 'package:get/get.dart';
 import 'package:myth/app/base/base_controller.dart';
@@ -101,7 +104,100 @@ class ${formatPageName(pageName)}Controller extends BaseController {
 }
 ''');
 
+  writeAppPages(pageName, directoryName: directoryName);
+  writeAppRoutes(pageName, directoryName: directoryName);
+
   print('$pageName 创建成功');
+}
+
+void writeAppRoutes(String pageName, {String directoryName = ''}) {
+  String filePath = 'lib/app/routes/app_routes.dart';
+  String route = "  static const ${pageName.toUpperCase()} = '/$pageName';";
+
+  // 读取文件内容
+  File file = File(filePath);
+  String content = file.readAsStringSync();
+
+  if (content.contains('Routes._();')) {
+    content = content.replaceFirst(
+      'Routes._();',
+      'Routes._();\n$route',
+    );
+  }
+
+  // 写回文件
+  file.writeAsStringSync(content);
+}
+
+void writeAppPages(String pageName, {String directoryName = ''}) {
+  // 向 page 中添加内容
+  String filePath = 'lib/app/routes/app_pages.dart';
+
+  // 要添加的 import 语句
+  String importBinding =
+      "import '../modules/$pageName/${pageName}_binding.dart';";
+  String importView = "import '../modules/$pageName/${pageName}_view.dart';";
+
+  if (directoryName.isNotEmpty) {
+    importBinding =
+        "import '../modules/$directoryName/$pageName/${pageName}_binding.dart';";
+    importView =
+        "import '../modules/$directoryName/$pageName/${pageName}_view.dart;";
+  }
+
+  String newPage = '''
+    GetPage(
+      name: Routes.${pageName.toUpperCase()},
+      page: () => const ${formatPageName(pageName)}View(),
+      binding: ${formatPageName(pageName)}Binding(),
+    ),
+  ''';
+
+  // 读取文件内容
+  File file = File(filePath);
+  String content = file.readAsStringSync();
+
+  // 检查是否已经包含 import 语句，如果没有，则添加
+  if (!content.contains(importBinding)) {
+    // 在文件中所有 import 语句之后插入新的 import 语句
+    final importSectionEnd = content.lastIndexOf("import '");
+    if (importSectionEnd != -1) {
+      final nextNewline = content.indexOf('\n', importSectionEnd);
+      content = content.replaceRange(
+        nextNewline + 1,
+        nextNewline + 1,
+        '$importBinding\n',
+      );
+    } else {
+      // 如果没有找到 import 语句，直接在文件顶部插入
+      content = '$importBinding\n$content';
+    }
+  }
+
+  if (!content.contains(importView)) {
+    final importSectionEnd = content.lastIndexOf("import '");
+    if (importSectionEnd != -1) {
+      final nextNewline = content.indexOf('\n', importSectionEnd);
+      content = content.replaceRange(
+        nextNewline + 1,
+        nextNewline + 1,
+        '$importView\n',
+      );
+    } else {
+      content = '$importView\n$content';
+    }
+  }
+
+  // 找到 routes 数组的位置并插入新的 GetPage
+  if (content.contains('static final routes = [')) {
+    content = content.replaceFirst(
+      'static final routes = [',
+      'static final routes = [\n$newPage',
+    );
+  }
+
+  // 写回文件
+  file.writeAsStringSync(content);
 }
 
 String formatPageName(String name) {

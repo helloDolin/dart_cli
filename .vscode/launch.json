@@ -12,9 +12,9 @@
             "type": "dart",
             "args": [
                 "create",
-                "page:test_page_2",
+                "page:test_page_tab3",
                 "on",
-                "home/tab1"
+                "home/tab3"
             ]
         }
     ]
