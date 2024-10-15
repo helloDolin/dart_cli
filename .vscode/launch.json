@@ -11,7 +11,7 @@
             "program": "bin/hd.dart",
             "type": "dart",
             "args": [
-                "create",
+                "kkcreate",
                 "page:test_page_1",
                 "on",
                 "home"

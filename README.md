@@ -31,7 +31,7 @@ executables:
 ```
 
 ## 激活
-dart pub global activate --source path /Users/bd/Desktop/hd
+dart pub global activate --source path /Users/bd/Desktop/github/hd
 只有激活后才可以在终端使用
 
 ## 发布
