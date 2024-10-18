@@ -1,87 +1,45 @@
 import 'dart:io';
 
+import 'constants.dart';
+
 void main(List<String> arguments) {
   if (arguments.isEmpty) {
-    print('请输入对应参数\neg:hd create page:<page_name>');
+    print('$kWarning请输入对应参数\neg:hd $kCreateCommand page:<page_name>');
     return;
   }
 
   final command = arguments.first;
 
-  if (command == 'create') {
-    if (arguments.length >= 2) {
-      if (arguments[1] == 'request') {
-        // 创建 request
-        if (!arguments.contains('on')) {
-          print('请通过 on 关键字告知目标模块');
-          return;
-        } else if (arguments.length == 4) {
-          final targetDirectory = arguments.last;
-          Directory pageDir =
-              Directory('lib/app/modules/$targetDirectory/repository');
-          pageDir.createSync(recursive: true);
-
-          File reqFile =
-              File('lib/app/modules/$targetDirectory/repository/request.dart');
-
-          // binding
-          reqFile.writeAsStringSync('''
-import 'package:myth/app/base/base_remote_source.dart';
-import 'package:myth/app/constants/static_config.dart';
-
-class ${targetDirectory.capitalize()}Request with BaseRemoteSource {
- 
+  if (command == kCreateCommand) {
+    dealCreateCommand(arguments);
+  } else if (command == kKKCreateCommand) {
+    dealKKCreateCommand(arguments);
+  } else {
+    print('$kError暂不支持 $command 命令');
+  }
 }
-''');
-          print('$targetDirectory request 创建成功');
-        } else {
-          print('命令输入有误');
+
+void dealKKCreateCommand(List<String> arguments) async {
+  if (arguments.length >= 2) {
+    if (arguments[1] == 'request') {
+      if (!arguments.contains('on')) {
+        print('$kError请通过 on 关键字告知目标模块');
+        return;
+      } else if (arguments.length == 4) {
+        final targetDirectory = arguments.last;
+        Directory pageDir =
+            Directory('lib/app/module/$targetDirectory/repository');
+        pageDir.createSync(recursive: true);
+
+        File reqFile =
+            File('lib/app/module/$targetDirectory/repository/request.dart');
+        bool exists = await reqFile.exists();
+        if (exists) {
+          print('$kError${reqFile.path} 已存在');
           return;
         }
 
-        return;
-      }
-
-      final parts = arguments[1].split(':');
-      if (parts.length == 1) {
-        print('命令输入有误');
-        return;
-      }
-
-      final type = parts[0];
-      final pageName = parts[1];
-      if (type == 'page') {
-        if (arguments.contains('on') && arguments.length == 4) {
-          final targetDirectory = arguments.last;
-          createPage(pageName, directoryName: targetDirectory);
-        } else {
-          createPage(pageName);
-        }
-      } else {
-        print('命令输入有误');
-      }
-    } else {
-      print('参数有误');
-    }
-  } else if (command == 'kkcreate') {
-    // 适配 kk
-    if (arguments.length >= 2) {
-      if (arguments[1] == 'request') {
-        // 创建 request
-        if (!arguments.contains('on')) {
-          print('请通过 on 关键字告知目标模块');
-          return;
-        } else if (arguments.length == 4) {
-          final targetDirectory = arguments.last;
-          Directory pageDir =
-              Directory('lib/app/module/$targetDirectory/repository');
-          pageDir.createSync(recursive: true);
-
-          File reqFile =
-              File('lib/app/module/$targetDirectory/repository/request.dart');
-
-          // binding
-          reqFile.writeAsStringSync('''
+        reqFile.writeAsStringSync('''
 import 'package:kkart/app/base/kk_base_remote_source.dart';
 import 'package:kkart/app/constants/kk_static_config.dart';
 
@@ -89,38 +47,96 @@ class ${targetDirectory.capitalize()}Request with KKBaseRemoteSource {
  
 }
 ''');
-          print('$targetDirectory request 创建成功');
-        } else {
-          print('命令输入有误');
+        print('$kSuccess$targetDirectory request 创建成功！！！');
+      } else {
+        print('$kError命令输入有误');
+        return;
+      }
+
+      return;
+    }
+
+    final parts = arguments[1].split(':');
+    if (parts.length == 1) {
+      print('$kError命令输入有误');
+      return;
+    }
+
+    final type = parts[0];
+    final pageName = parts[1];
+    if (type == 'page') {
+      if (arguments.contains('on') && arguments.length == 4) {
+        final targetDirectory = arguments.last;
+        kkcreatePage(pageName, directoryName: targetDirectory);
+      } else {
+        kkcreatePage(pageName);
+      }
+    } else {
+      print('$kError命令输入有误');
+    }
+  } else {
+    print('$kError参数有误');
+  }
+}
+
+void dealCreateCommand(List<String> arguments) async {
+  if (arguments.length >= 2) {
+    if (arguments[1] == 'request') {
+      if (!arguments.contains('on')) {
+        print('$kError请通过 on 关键字告知目标模块');
+        return;
+      } else if (arguments.length == 4) {
+        final targetDirectory = arguments.last;
+        Directory pageDir =
+            Directory('lib/app/modules/$targetDirectory/repository');
+        pageDir.createSync(recursive: true);
+
+        File reqFile =
+            File('lib/app/modules/$targetDirectory/repository/request.dart');
+
+        bool exists = await reqFile.exists();
+        if (exists) {
+          print('$kError${reqFile.path} 文件已存在');
           return;
         }
 
-        return;
-      }
+        reqFile.writeAsStringSync('''
+import 'package:myth/app/base/base_remote_source.dart';
+import 'package:myth/app/constants/static_config.dart';
 
-      final parts = arguments[1].split(':');
-      if (parts.length == 1) {
-        print('命令输入有误');
-        return;
-      }
-
-      final type = parts[0];
-      final pageName = parts[1];
-      if (type == 'page') {
-        if (arguments.contains('on') && arguments.length == 4) {
-          final targetDirectory = arguments.last;
-          kkcreatePage(pageName, directoryName: targetDirectory);
-        } else {
-          kkcreatePage(pageName);
-        }
+class ${targetDirectory.capitalize()}Request with BaseRemoteSource {
+ 
+}
+''');
+        print('$kSuccess$targetDirectory request 创建成功！！！');
       } else {
-        print('命令输入有误');
+        print('$kError命令输入有误');
+        return;
+      }
+
+      return;
+    }
+
+    final parts = arguments[1].split(':');
+    if (parts.length == 1) {
+      print('$kError命令输入有误');
+      return;
+    }
+
+    final type = parts[0];
+    final pageName = parts[1];
+    if (type == 'page') {
+      if (arguments.contains('on') && arguments.length == 4) {
+        final targetDirectory = arguments.last;
+        createPage(pageName, directoryName: targetDirectory);
+      } else {
+        createPage(pageName);
       }
     } else {
-      print('参数有误');
+      print('$kError命令输入有误');
     }
   } else {
-    print('暂不支持 $command 命令');
+    print('$kError参数有误');
   }
 }
 
@@ -199,7 +215,7 @@ class ${formatPageName(pageName)}Controller extends KKBaseController {
   kkwriteAppPages(pageName, directoryName: directoryName);
   kkwriteAppRoutes(pageName, directoryName: directoryName);
 
-  print('$pageName 创建成功');
+  print('$kSuccess$pageName 创建成功！！！');
 }
 
 void kkwriteAppRoutes(String pageName, {String directoryName = ''}) {
@@ -363,7 +379,7 @@ class ${formatPageName(pageName)}Controller extends BaseController {
   writeAppPages(pageName, directoryName: directoryName);
   writeAppRoutes(pageName, directoryName: directoryName);
 
-  print('$pageName 创建成功');
+  print('$kSuccess$pageName 创建成功！！！');
 }
 
 void writeAppRoutes(String pageName, {String directoryName = ''}) {
