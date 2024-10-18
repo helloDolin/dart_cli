@@ -43,7 +43,7 @@ void dealKKCreateCommand(List<String> arguments) async {
 import 'package:kkart/app/base/kk_base_remote_source.dart';
 import 'package:kkart/app/constants/kk_static_config.dart';
 
-class ${targetDirectory.capitalize()}Request with KKBaseRemoteSource {
+class ${format2UpperCamelCase(targetDirectory)}Request with KKBaseRemoteSource {
  
 }
 ''');
@@ -104,7 +104,7 @@ void dealCreateCommand(List<String> arguments) async {
 import 'package:myth/app/base/base_remote_source.dart';
 import 'package:myth/app/constants/static_config.dart';
 
-class ${targetDirectory.capitalize()}Request with BaseRemoteSource {
+class ${format2UpperCamelCase(targetDirectory)}Request with BaseRemoteSource {
  
 }
 ''');
@@ -167,11 +167,11 @@ import 'package:get/get.dart';
 
 import '${pageName}_controller.dart';
 
-class ${formatPageName(pageName)}Binding extends Bindings {
+class ${format2UpperCamelCase(pageName)}Binding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<${formatPageName(pageName)}Controller>(
-      () => ${formatPageName(pageName)}Controller(),
+    Get.lazyPut<${format2UpperCamelCase(pageName)}Controller>(
+      () => ${format2UpperCamelCase(pageName)}Controller(),
     );
   }
 }
@@ -185,18 +185,18 @@ import 'package:kkart/app/base/kk_base_view.dart';
 
 import '${pageName}_controller.dart';
 
-class ${formatPageName(pageName)}View extends KKBaseView<${formatPageName(pageName)}Controller> {
-  const ${formatPageName(pageName)}View({Key? key}) : super(key: key);
+class ${format2UpperCamelCase(pageName)}View extends KKBaseView<${format2UpperCamelCase(pageName)}Controller> {
+  const ${format2UpperCamelCase(pageName)}View({Key? key}) : super(key: key);
 
   @override
-  String get appBatTitle => '${formatPageName(pageName)}';
+  String get appBatTitle => '${format2UpperCamelCase(pageName)}';
 
   @override
   Widget kkBody(BuildContext context) {
     return GetBuilder(
       init: controller,
       builder: (_) {
-        return Text('${formatPageName(pageName)}',style:TextStyle(color:Colors.black));
+        return Text('${format2UpperCamelCase(pageName)}',style:TextStyle(color:Colors.black));
       }
     );
   }
@@ -207,7 +207,7 @@ class ${formatPageName(pageName)}View extends KKBaseView<${formatPageName(pageNa
   controllerFile.writeAsStringSync('''
 import 'package:kkart/app/base/kk_base_controller.dart';
 
-class ${formatPageName(pageName)}Controller extends KKBaseController {
+class ${format2UpperCamelCase(pageName)}Controller extends KKBaseController {
 
 }
 ''');
@@ -254,8 +254,8 @@ void kkwriteAppPages(String pageName, {String directoryName = ''}) {
   String newPage = '''
     GetPage(
       name: KKRoutes.${pageName.toUpperCase()},
-      page: () => const ${formatPageName(pageName)}View(),
-      binding: ${formatPageName(pageName)}Binding(),
+      page: () => const ${format2UpperCamelCase(pageName)}View(),
+      binding: ${format2UpperCamelCase(pageName)}Binding(),
     ),
   ''';
 
@@ -331,11 +331,11 @@ import 'package:get/get.dart';
 
 import '${pageName}_controller.dart';
 
-class ${formatPageName(pageName)}Binding extends Bindings {
+class ${format2UpperCamelCase(pageName)}Binding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<${formatPageName(pageName)}Controller>(
-      () => ${formatPageName(pageName)}Controller(),
+    Get.lazyPut<${format2UpperCamelCase(pageName)}Controller>(
+      () => ${format2UpperCamelCase(pageName)}Controller(),
     );
   }
 }
@@ -349,18 +349,18 @@ import 'package:myth/app/base/base_view.dart';
 
 import '${pageName}_controller.dart';
 
-class ${formatPageName(pageName)}View extends BaseView<${formatPageName(pageName)}Controller> {
-  const ${formatPageName(pageName)}View({Key? key}) : super(key: key);
+class ${format2UpperCamelCase(pageName)}View extends BaseView<${format2UpperCamelCase(pageName)}Controller> {
+  const ${format2UpperCamelCase(pageName)}View({Key? key}) : super(key: key);
 
   @override
-  String get appBatTitle => '${formatPageName(pageName)}';
+  String get appBatTitle => '${format2UpperCamelCase(pageName)}';
 
   @override
   Widget body(BuildContext context) {
     return GetBuilder(
       init: controller,
       builder: (_) {
-        return Text('${formatPageName(pageName)}');
+        return Text('${format2UpperCamelCase(pageName)}');
       }
     );
   }
@@ -371,7 +371,7 @@ class ${formatPageName(pageName)}View extends BaseView<${formatPageName(pageName
   controllerFile.writeAsStringSync('''
 import 'package:myth/app/base/base_controller.dart';
 
-class ${formatPageName(pageName)}Controller extends BaseController {
+class ${format2UpperCamelCase(pageName)}Controller extends BaseController {
 
 }
 ''');
@@ -420,8 +420,8 @@ void writeAppPages(String pageName, {String directoryName = ''}) {
   String newPage = '''
     GetPage(
       name: Routes.${pageName.toUpperCase()},
-      page: () => const ${formatPageName(pageName)}View(),
-      binding: ${formatPageName(pageName)}Binding(),
+      page: () => const ${format2UpperCamelCase(pageName)}View(),
+      binding: ${format2UpperCamelCase(pageName)}Binding(),
     ),
   ''';
 
@@ -472,7 +472,8 @@ void writeAppPages(String pageName, {String directoryName = ''}) {
   file.writeAsStringSync(content);
 }
 
-String formatPageName(String name) {
+/// 格式化为大驼峰命名
+String format2UpperCamelCase(String name) {
   List<String> arr = name.split('_');
   if (arr.isNotEmpty) {
     String res = '';
