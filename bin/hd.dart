@@ -1,21 +1,32 @@
 import 'dart:io';
 
 import 'constants.dart';
+import 'help_text.dart';
 
 void main(List<String> arguments) {
   if (arguments.isEmpty) {
-    print('$kWarning请输入对应参数\neg:hd $kCreateCommand page:<page_name>');
+    print(helpText);
     return;
   }
 
   final command = arguments.first;
+
+  if (command == '-v' || command == '--version') {
+    print(kVersion);
+    return;
+  }
+
+  if (command == '-h' || command == '--help') {
+    print(helpText);
+    return;
+  }
 
   if (command == kCreateCommand) {
     dealCreateCommand(arguments);
   } else if (command == kKKCreateCommand) {
     dealKKCreateCommand(arguments);
   } else {
-    print('$kError暂不支持 $command 命令');
+    print('$kError 暂不支持$command 命令');
   }
 }
 

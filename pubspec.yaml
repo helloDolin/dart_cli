@@ -1,6 +1,6 @@
 name: hd
 description: custom get CLI,(for flutter project with getx)
-version: 1.0.6
+version: 1.0.7
 repository: https://github.com/helloDolin
 
 environment:

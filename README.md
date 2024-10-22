@@ -13,6 +13,13 @@ dart pub global activate hd
 环境变量中添加：
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
+安装成功后可以在 /Users/bd/.pub-cache/bin/hd 看到可执行文件的存在
+
+## 查看所有安装的可执行文件
+dart pub global list
+
+## 引出可执行文件
+dart pub global deactivate bd_cli
 
 ## 使用
 ### 普通项目
@@ -28,9 +35,10 @@ flutter kkcreate:page <page_name> on <module_name>
 dart create -t console-full hd  
 
 ## yaml 文件添加如下
+添加 executables 节点，将 hd 作为可执行命令
 ```yaml
 executables:
-  hd: hd
+  hd: 
 ```
 
 ## 激活
