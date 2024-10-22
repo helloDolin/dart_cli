@@ -9,4 +9,4 @@ const String kWarning = '🚨🚨🚨 warning:';
 const String kSuccess = '🎉🎉🎉 :';
 // ========================================  message end
 
-String kVersion = '1.0.8'; // 版本号常量
+String kVersion = '0.0.1'; // 版本号常量
