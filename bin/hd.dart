@@ -2,22 +2,18 @@ import 'dart:io';
 
 import 'constants.dart';
 import 'help_text.dart';
+import 'util.dart';
 
 void main(List<String> arguments) {
   if (arguments.isEmpty) {
-    print(helpText);
+    printHelp(helpText);
     return;
   }
 
   final command = arguments.first;
 
-  if (command == '-v' || command == '--version') {
-    print(kVersion);
-    return;
-  }
-
   if (command == '-h' || command == '--help') {
-    print(helpText);
+    printHelp(helpText);
     return;
   }
 
@@ -26,7 +22,7 @@ void main(List<String> arguments) {
   } else if (command == kKKCreateCommand) {
     dealKKCreateCommand(arguments);
   } else {
-    print('$kError 暂不支持$command 命令');
+    printError('暂不支持$command 命令');
   }
 }
 
@@ -34,7 +30,7 @@ void dealKKCreateCommand(List<String> arguments) async {
   if (arguments.length >= 2) {
     if (arguments[1] == 'request') {
       if (!arguments.contains('on')) {
-        print('$kError请通过 on 关键字告知目标模块');
+        printError('请通过 on 关键字告知目标模块');
         return;
       } else if (arguments.length == 4) {
         final targetDirectory = arguments.last;
@@ -46,7 +42,7 @@ void dealKKCreateCommand(List<String> arguments) async {
             File('lib/app/module/$targetDirectory/repository/request.dart');
         bool exists = await reqFile.exists();
         if (exists) {
-          print('$kError${reqFile.path} 已存在');
+          printError('${reqFile.path} 已存在');
           return;
         }
 
@@ -58,9 +54,9 @@ class ${format2UpperCamelCase(targetDirectory)}Request with KKBaseRemoteSource {
  
 }
 ''');
-        print('$kSuccess$targetDirectory request 创建成功！！！');
+        printSuccess('$targetDirectory request 创建成功！！！');
       } else {
-        print('$kError命令输入有误');
+        printError('命令输入有误');
         return;
       }
 
@@ -69,7 +65,7 @@ class ${format2UpperCamelCase(targetDirectory)}Request with KKBaseRemoteSource {
 
     final parts = arguments[1].split(':');
     if (parts.length == 1) {
-      print('$kError命令输入有误');
+      printError('命令输入有误');
       return;
     }
 
@@ -83,10 +79,10 @@ class ${format2UpperCamelCase(targetDirectory)}Request with KKBaseRemoteSource {
         kkcreatePage(pageName);
       }
     } else {
-      print('$kError命令输入有误');
+      printError('命令输入有误');
     }
   } else {
-    print('$kError参数有误');
+    printError('参数有误');
   }
 }
 
@@ -94,7 +90,7 @@ void dealCreateCommand(List<String> arguments) async {
   if (arguments.length >= 2) {
     if (arguments[1] == 'request') {
       if (!arguments.contains('on')) {
-        print('$kError请通过 on 关键字告知目标模块');
+        printError('请通过 on 关键字告知目标模块');
         return;
       } else if (arguments.length == 4) {
         final targetDirectory = arguments.last;
@@ -107,7 +103,7 @@ void dealCreateCommand(List<String> arguments) async {
 
         bool exists = await reqFile.exists();
         if (exists) {
-          print('$kError${reqFile.path} 文件已存在');
+          printError('${reqFile.path} 文件已存在');
           return;
         }
 
@@ -119,9 +115,9 @@ class ${format2UpperCamelCase(targetDirectory)}Request with BaseRemoteSource {
  
 }
 ''');
-        print('$kSuccess$targetDirectory request 创建成功！！！');
+        printSuccess('$targetDirectory request 创建成功！！！');
       } else {
-        print('$kError命令输入有误');
+        printError('命令输入有误');
         return;
       }
 
@@ -130,7 +126,7 @@ class ${format2UpperCamelCase(targetDirectory)}Request with BaseRemoteSource {
 
     final parts = arguments[1].split(':');
     if (parts.length == 1) {
-      print('$kError命令输入有误');
+      printError('命令输入有误');
       return;
     }
 
@@ -144,10 +140,10 @@ class ${format2UpperCamelCase(targetDirectory)}Request with BaseRemoteSource {
         createPage(pageName);
       }
     } else {
-      print('$kError命令输入有误');
+      printError('命令输入有误');
     }
   } else {
-    print('$kError参数有误');
+    printError('参数有误');
   }
 }
 
@@ -226,7 +222,7 @@ class ${format2UpperCamelCase(pageName)}Controller extends KKBaseController {
   kkwriteAppPages(pageName, directoryName: directoryName);
   kkwriteAppRoutes(pageName, directoryName: directoryName);
 
-  print('$kSuccess$pageName 创建成功！！！');
+  printSuccess('$pageName 创建成功！！！');
 }
 
 void kkwriteAppRoutes(String pageName, {String directoryName = ''}) {
@@ -390,7 +386,7 @@ class ${format2UpperCamelCase(pageName)}Controller extends BaseController {
   writeAppPages(pageName, directoryName: directoryName);
   writeAppRoutes(pageName, directoryName: directoryName);
 
-  print('$kSuccess$pageName 创建成功！！！');
+  printSuccess('$pageName 创建成功！！！');
 }
 
 void writeAppRoutes(String pageName, {String directoryName = ''}) {

@@ -12,7 +12,6 @@ hd kkcreate page:friends_list on friends
 hd kkcreate request on friends
 
 Global options:
--v, --version               Print the hd version.
 -h, --help                  Print this usage information.
   ''';
 }
