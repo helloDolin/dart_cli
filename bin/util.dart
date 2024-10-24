@@ -15,5 +15,7 @@ void printWarning(String message) {
 }
 
 void printHelp(String message) {
-  print(AnsiStyles.green(message));
+  // 前景白色，背景黑色
+  // print(AnsiStyles.white.bgBlack(message));
+  print(message);
 }

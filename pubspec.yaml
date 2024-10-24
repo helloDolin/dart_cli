@@ -1,6 +1,6 @@
 name: hd
 description: custom get CLI,(for flutter project with getx)
-version: 0.0.12
+version: 0.0.13
 repository: https://github.com/helloDolin
 
 environment:
@@ -9,7 +9,7 @@ environment:
 # Add regular dependencies here.
 dependencies:
   path: ^1.8.0
-  ansi_styles: 0.3.2+1 # 终端打印彩色
+  ansi_styles: 0.3.2+1
 
 executables:
   hd: hd # 表示将 bin/hd.dart 的内容作为 hd 命令行工具的入口
